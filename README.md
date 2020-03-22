@@ -15,3 +15,4 @@ The tilemap has been created from [MedicineStorm's tiles](https://opengameart.or
     * https://developer.mozilla.org/en-US/docs/Games/Techniques/Tilemaps
     * https://github.com/mozdevs/gamedev-js-tiles
 * Rotate player and enemies when they move from left to right and from right to left
+* Enemies should be defined by the tilemap
