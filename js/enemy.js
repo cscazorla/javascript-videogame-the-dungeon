@@ -51,7 +51,7 @@ var enemy = function(x, y, type)
     {
         if (Game.main_player.isLocatedInPosition(this.x, this.y))
         {
-            Game.main_player.gameOver();
+            Game.main_player.hitByEnemy();
         }
 
         if(this.counter < (1/this.speed))

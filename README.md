@@ -9,7 +9,5 @@ The tilemap has been created from [MedicineStorm's tiles](https://opengameart.or
     * https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API/Using_the_Gamepad_API
     * https://beej.us/blog/data/javascript-gamepad/
     * https://html5gamepad.com/
-* Enemies should be defined by the tilemap
 * Refactor to use Clases and extends subclasess (enemies, torches, isLocatedInPosition)
-* Add lives to the player. When the player is hit by a monster the current level is restarted. When he loses all lives the game is over
 * Player can fire weapons and kill monsters

@@ -40,13 +40,11 @@ window.onload = function () {
 Game.run = function (context) {
     this.ctx = context;
     this._previousElapsed = 0;
-
     var p = this.load();
     Promise.all(p).then(function (loaded) {
         this.init(0);
         window.requestAnimationFrame(this.tick);
     }.bind(this));
-
 }
 
 Game.load = function () {
@@ -60,10 +58,12 @@ Game.init = function (level) {
     this.tileAtlas = Loader.getImage('tiles');
 
     this.main_player = new player();
+    this.main_player.has_key = false;
+    
     this.enemies = [];
 
     this.current_level = level;
-    Game.setLevelLabel();
+    Game.updateUILabels();
 
     map.resetMapTiles();
 
@@ -78,7 +78,9 @@ Game.init = function (level) {
                 case PLAYER:
                     this.main_player.x = c;
                     this.main_player.y = r;
-                    this.main_player.has_key = false;
+                    this.main_player.starting_x = c;
+                    this.main_player.starting_y = r;
+                    
                     map.setTile(this.current_level, c, r, PATH);
                 break;
 
@@ -203,7 +205,8 @@ Game.render = function ()
     );
 }
 
-Game.setLevelLabel = function () {
+Game.updateUILabels = function () {
     var level = this.current_level + 1;
     document.getElementById("level").innerHTML = "Level: " + level;
+    document.getElementById("lifes").innerHTML = "Lifes: " + this.main_player.lifes;
 }

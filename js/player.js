@@ -1,8 +1,12 @@
 var player = function()
 {
+    this.max_lifes = 3;
+    this.lifes = this.max_lifes;
     this.is_looking_right = false;
     this.speed_delay = 4;
     this.counter_speed_delay = 0;
+    this.starting_x = 0;
+    this.starting_y = 0;
     
     this.draw = function()
     {
@@ -95,7 +99,19 @@ var player = function()
             this.counter_speed_delay = 0;
         }
     }
-    
+
+    this.hitByEnemy = function() {
+        this.lifes -= 1;
+        Game.updateUILabels();
+
+        if (this.lifes == 0) {
+            this.gameOver();
+        } else {
+            this.x = this.starting_x;
+            this.y = this.starting_y;
+        }
+    }
+
     this.win = function()
     {
         if( Game.current_level + 1 == map.getTotalLevels()) {
