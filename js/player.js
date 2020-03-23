@@ -4,23 +4,38 @@ var player = function()
     this.y = 1;
     
     this.has_key = false;
-    
+    this.is_looking_right = false;
+
     this.speed_delay = 4;
     this.counter_speed_delay = 0;
     
     this.draw = function()
     {
-        Game.ctx.drawImage(
-            Game.tileAtlas,
-            0,
-            map.tsize,
-            map.tsize,
-            map.tsize,
-            this.x * map.csize,
-            this.y * map.csize,
-            map.csize,
-            map.csize
-        );
+        if(this.is_looking_right) {
+            Game.ctx.drawImage(
+                Game.tileAtlas,
+                4 * map.tsize,
+                2 * map.tsize,
+                map.tsize,
+                map.tsize,
+                this.x * map.csize,
+                this.y * map.csize,
+                map.csize,
+                map.csize
+            );
+        } else {
+            Game.ctx.drawImage(
+                Game.tileAtlas,
+                0,
+                map.tsize,
+                map.tsize,
+                map.tsize,
+                this.x * map.csize,
+                this.y * map.csize,
+                map.csize,
+                map.csize
+            );
+        }
     }
     
     this.isLocatedInPosition = function(x,y)
@@ -68,6 +83,7 @@ var player = function()
                 if(this.isWall(this.x-1, this.y) == false)
                 {
                     this.x--;
+                    this.is_looking_right = false;
                 }
                 break;
                 
@@ -75,6 +91,7 @@ var player = function()
                 if(this.isWall(this.x+1, this.y) == false)
                 {
                     this.x++;
+                    this.is_looking_right = true;
                 }
                 break;
             }
