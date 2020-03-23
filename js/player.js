@@ -10,17 +10,22 @@ var player = function()
     
     this.draw = function()
     {
-        Game.ctx.drawImage(Game.tileAtlas,0,TILE_HEIGHT,TILE_WIDTH,TILE_HEIGHT,this.x*ROW_WIDTH,this.y*ROW_HEIGHT,ROW_WIDTH,ROW_HEIGHT);
+        Game.ctx.drawImage(
+            Game.tileAtlas,
+            0,
+            map.tsize,
+            map.tsize,
+            map.tsize,
+            this.x * map.csize,
+            this.y * map.csize,
+            map.csize,
+            map.csize
+        );
     }
     
     this.isLocatedInPosition = function(x,y)
     {
-        if(this.x == x && this.y == y)
-        {
-            return true;
-        } else {
-            return false;
-        }
+        return (this.x == x && this.y == y)?true:false;
     }
     
     this.isWall = function(x,y)
@@ -99,7 +104,6 @@ var player = function()
             }
         }
     }
-    
     
     this.gameOver = function()
     {

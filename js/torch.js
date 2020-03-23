@@ -27,7 +27,27 @@ var torch = function(x,y)
             this.animate();
         }
 
-        Game.ctx.drawImage(Game.tileAtlas,this.current_frame*TILE_WIDTH,2*TILE_HEIGHT,TILE_WIDTH,TILE_HEIGHT,ROW_WIDTH*x,ROW_HEIGHT*y,ROW_WIDTH,ROW_HEIGHT);
+        Game.ctx.drawImage(
+            Game.tileAtlas,
+            this.current_frame * map.tsize,
+            2 * map.tsize,
+            map.tsize,
+            map.tsize,
+            map.csize * x,
+            map.csize * y,
+            map.csize,
+            map.csize
+        );
+    }
+
+    this.isLocatedInPosition = function(x,y)
+    {
+        if(this.x == x && this.y == y)
+        {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

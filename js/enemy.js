@@ -15,11 +15,25 @@ var enemy = function(x,y,type)
 
     this.direction = Math.floor(Math.random()*4);
 
-    this.draw = function()
+    this.isLocatedInPosition = function(x,y)
     {
-        Game.ctx.drawImage(Game.tileAtlas,this.type*TILE_WIDTH,TILE_HEIGHT,TILE_WIDTH,TILE_HEIGHT,this.x*ROW_WIDTH,this.y*ROW_HEIGHT,ROW_WIDTH,ROW_HEIGHT);
+        return (this.x == x && this.y == y)?true:false;
     }
 
+    this.draw = function()
+    {
+        Game.ctx.drawImage(
+            Game.tileAtlas,
+            this.type * map.tsize,
+            map.tsize,
+            map.tsize,
+            map.tsize,
+            this.x * map.csize,
+            this.y * map.csize,
+            map.csize,
+            map.csize
+        );
+    }
 
     this.isCollision = function(x,y)
     {
