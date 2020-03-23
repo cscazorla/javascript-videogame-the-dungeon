@@ -1,5 +1,7 @@
 # Introduction
-Simple 2D game written in pure Javascript
+Simple 2D game written in pure Javascript. Use the arrow keys to move the player, find the key and scape without being caught.
+
+![GitHub Logo](/img/screenshot.png)
 
 # Assets
 The tilemap has been created from [MedicineStorm's tiles](https://opengameart.org/content/dungeon-crawl-32x32-tiles-supplemental).
