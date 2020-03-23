@@ -10,10 +10,6 @@ The tilemap has been created from [MedicineStorm's tiles](https://opengameart.or
     * https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API/Using_the_Gamepad_API
     * https://beej.us/blog/data/javascript-gamepad/
     * https://html5gamepad.com/
-* HTML canvas width height full screen
-* Enable Camera View
-    * https://developer.mozilla.org/en-US/docs/Games/Techniques/Tilemaps
-    * https://github.com/mozdevs/gamedev-js-tiles
 * Rotate player and enemies when they move from left to right and from right to left
 * Enemies should be defined by the tilemap
 * Refactor to use Clases and extends subclasess (enemies, torches, isLocatedInPosition)
