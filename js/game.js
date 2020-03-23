@@ -43,7 +43,7 @@ Game.run = function (context) {
 
     var p = this.load();
     Promise.all(p).then(function (loaded) {
-        this.init();
+        this.init(0);
         window.requestAnimationFrame(this.tick);
     }.bind(this));
 
@@ -56,19 +56,44 @@ Game.load = function () {
 };
 
 
-Game.init = function () {
+Game.init = function (level) {
     this.tileAtlas = Loader.getImage('tiles');
 
     this.main_player = new player();
+    this.enemies = [];
 
-    // Look for the coordinates of the Exit
+    this.current_level = level;
+    Game.setLevelLabel();
+
+    map.resetMapTiles();
+
+    // Look for the coordinates of the Player, Enemies and Exit
     for(var c = 0; c < map.cols; c++)
     {
         for(var r = 0; r < map.rows; r++)
         {
-            if (map.getTile(c,r) == EXIT_CLOSED) {
-                this.exit_coordinate_x = c;
-                this.exit_coordinate_y = r;
+            var tile = map.getTile(this.current_level, c, r);
+
+            switch (tile) {
+                case PLAYER:
+                    this.main_player.x = c;
+                    this.main_player.y = r;
+                    this.main_player.has_key = false;
+                    map.setTile(this.current_level, c, r, PATH);
+                break;
+
+                case ENEMY1:
+                case ENEMY2:
+                case ENEMY3:
+                case ENEMY4:
+                    this.enemies.push(new enemy(c, r, tile - 6));
+                    map.setTile(this.current_level, c, r, PATH);
+                break;
+
+                case EXIT_CLOSED:
+                    this.exit_coordinate_x = c;
+                    this.exit_coordinate_y = r;
+                    break;
             }
         }
     }
@@ -76,19 +101,9 @@ Game.init = function () {
     // Spawn torches
     this.torches = [
         new torch(0, 0),
-        new torch(7, 0),
         new torch(14, 0),
         new torch(0, 9),
-        new torch(7, 9),
         new torch(14, 9),
-    ];
-
-    // Spawn enemies
-    this.enemies = [
-        new enemy(1, 8, 1),
-        new enemy(7, 3, 2),
-        new enemy(12, 3, 3),
-        new enemy(7, 8, 4)
     ];
 
     Keyboard.listenForEvents([Keyboard.LEFT, Keyboard.RIGHT, Keyboard.UP, Keyboard.DOWN]);
@@ -136,7 +151,7 @@ Game.update = function (delta) {
 
 Game.render = function () 
 {
-    var camera_size = 3;
+    var camera_size = 2;
     
     // Camera view
     for(var c = this.main_player.x - camera_size; c < this.main_player.x + camera_size + 1; c++)
@@ -144,10 +159,10 @@ Game.render = function ()
         for(var r = this.main_player.y - camera_size; r < this.main_player.y + camera_size + 1; r++)
         {
             // Tilemap
-            var tile = map.getTile(c, r);
+            var tile = map.getTile(this.current_level, c , r);
             Game.ctx.drawImage(
                 this.tileAtlas,
-                tile * map.tsize,
+                (tile - 1) * map.tsize,
                 0,
                 map.tsize,
                 map.tsize,
@@ -188,6 +203,7 @@ Game.render = function ()
     );
 }
 
-Game.printMessage = function (message) {
-    document.getElementById("messages").innerHTML = message;
+Game.setLevelLabel = function () {
+    var level = this.current_level + 1;
+    document.getElementById("level").innerHTML = "Level: " + level;
 }

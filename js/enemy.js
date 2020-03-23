@@ -1,4 +1,4 @@
-var enemy = function(x,y,type)
+var enemy = function(x, y, type)
 {
     this.speed = 1; // 1: Slow, 10: Fast
     this.speed /= 50;
@@ -39,7 +39,7 @@ var enemy = function(x,y,type)
     {
         var colision = false;
 
-        if(map.getTile(x,y) == WALL || map.getTile(x,y) == EXIT_CLOSED || map.getTile(x,y) == EXIT_OPEN)
+        if(map.getTile(Game.current_level, x, y) == WALL || map.getTile(Game.current_level, x, y) == EXIT_CLOSED || map.getTile(Game.current_level, x, y) == EXIT_OPEN)
         {
             colision = true;
         }

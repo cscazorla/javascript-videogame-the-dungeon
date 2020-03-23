@@ -1,11 +1,6 @@
 var player = function()
 {
-    this.x = 1;
-    this.y = 1;
-    
-    this.has_key = false;
     this.is_looking_right = false;
-
     this.speed_delay = 4;
     this.counter_speed_delay = 0;
     
@@ -47,7 +42,7 @@ var player = function()
     {
         var is_wall = false;
         
-        if(map.getTile(x,y) == WALL || map.getTile(x,y) == EXIT_CLOSED)
+        if(map.getTile(Game.current_level, x, y) == WALL || map.getTile(Game.current_level, x, y) == EXIT_CLOSED)
         {
             is_wall = true;
         }
@@ -103,52 +98,37 @@ var player = function()
     
     this.win = function()
     {
-        Game.printMessage('¡Has ganado!');
-        
-        this.x = 1;
-        this.y = 1;
-        
-        this.has_key = false;
-        map.setTile(3,8,KEY);
-        for(var c = 0; c < map.cols; c++)
-        {
-            for(var r = 0; r < map.rows; r++)
-            {
-                if (map.getTile(c,r) == EXIT_OPEN)
-                {
-                    map.setTile(c,r,EXIT_CLOSED);
-                }
-            }
+        if( Game.current_level + 1 == map.getTotalLevels()) {
+            alert('¡Has ganado!');
+            Game.init(0);
+        } else {
+            Game.init(Game.current_level + 1);
         }
+            
     }
     
     this.gameOver = function()
     {
-        Game.printMessage('¡Has perdido! Comienza de nuevo');
+        alert('¡Has perdido! Comienza de nuevo');
+        Game.init(0);
         
-        this.x = 1;
-        this.y = 1;
-        
-        this.has_key = false;
-        map.setTile(3,8,KEY);
     }
     
     this.touchObject = function()
     {
-        var object = map.getTile(this.x,this.y);
+        var object = map.getTile(Game.current_level, this.x, this.y);
         
         if(object == KEY)
         {
             this.has_key = true;
-            map.setTile(this.x,this.y,PATH);
-            Game.printMessage('¡Has obtenido la llave!');
+            map.setTile(Game.current_level, this.x, this.y, PATH);
             for(var c = 0; c < map.cols; c++)
             {
                 for(var r = 0; r < map.rows; r++)
                 {
-                    if (map.getTile(c,r) == EXIT_CLOSED)
+                    if (map.getTile(Game.current_level, c, r) == EXIT_CLOSED)
                     {
-                        map.setTile(c,r,EXIT_OPEN);
+                        map.setTile(Game.current_level, c, r, EXIT_OPEN);
                     }
                 }
             }
@@ -159,7 +139,7 @@ var player = function()
             if(this.has_key == true)
             this.win();
             else
-            Game.printMessage('No tienes la llave, no puedes pasar.');
+            alert('No tienes la llave, no puedes pasar.');
         }
     }
 }
