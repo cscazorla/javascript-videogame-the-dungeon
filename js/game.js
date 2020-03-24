@@ -25,8 +25,11 @@ Loader.getImage = function (key) {
 };
 
 var Game = {}
+Game.CANVAS_MAP_WIDTH = 480;
+Game.CANVAS_MAP_HEIGHT = 320;
+Game.CANVAS_TOOLBAR_HEIGHT = 32; 
 Game.CANVAS_WIDTH = 480;
-Game.CANVAS_HEIGHT = 320;
+Game.CANVAS_HEIGHT = Game.CANVAS_MAP_HEIGHT + Game.CANVAS_TOOLBAR_HEIGHT;
 
 window.onload = function () {
     canvas = document.getElementById('canvas');
@@ -63,7 +66,6 @@ Game.init = function (level) {
     this.enemies = [];
 
     this.current_level = level;
-    Game.updateUILabels();
 
     map.resetMapTiles();
 
@@ -203,10 +205,63 @@ Game.render = function ()
         map.csize,
         map.csize
     );
-}
 
-Game.updateUILabels = function () {
-    var level = this.current_level + 1;
-    document.getElementById("level").innerHTML = "Level: " + level;
-    document.getElementById("lifes").innerHTML = "Lifes: " + this.main_player.lifes;
+    // Toolbar background
+    for (i = 0; i < map.cols; i++)
+    {
+        Game.ctx.drawImage(
+            Game.tileAtlas,
+            map.tsize * 3,
+            0,
+            map.tsize,
+            map.tsize,
+            map.csize * i,
+            this.CANVAS_MAP_HEIGHT,
+            map.csize,
+            map.csize
+        );
+    }
+    
+    // Toolbar lifes
+    this.ctx.fillStyle = '#421e02';
+    this.ctx.font = '18px Rock Salt';
+    this.ctx.textBaseline = 'top';
+    this.ctx.fillText('Lifes', 5, this.CANVAS_MAP_HEIGHT + 10);
+    for(i = 0; i < this.main_player.lifes; i++)
+    {
+        Game.ctx.drawImage(
+            Game.tileAtlas,
+            0,
+            map.tsize,
+            map.tsize,
+            map.tsize,
+            65 + i * map.tsize,
+            this.CANVAS_MAP_HEIGHT,
+            map.tsize,
+            map.tsize
+        );
+    }
+    
+    // Key
+    if(Game.main_player.has_key)
+    {
+        Game.ctx.drawImage(
+            Game.tileAtlas,
+            map.tsize * 4,
+            0,
+            map.tsize,
+            map.tsize,
+            this.CANVAS_WIDTH/2,
+            this.CANVAS_MAP_HEIGHT + 2,
+            map.tsize,
+            map.tsize
+        );
+    }
+
+    // Toolbar level
+    this.ctx.fillStyle = '#421e02';
+    this.ctx.font = '18px Rock Salt';
+    this.ctx.textBaseline = 'top';
+    var level = 'Level: ' + (this.current_level + 1);
+    this.ctx.fillText(level, this.CANVAS_WIDTH * (8/10), this.CANVAS_MAP_HEIGHT + 10);
 }

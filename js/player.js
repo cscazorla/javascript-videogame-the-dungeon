@@ -102,7 +102,6 @@ var player = function()
 
     this.hitByEnemy = function() {
         this.lifes -= 1;
-        Game.updateUILabels();
 
         if (this.lifes == 0) {
             this.gameOver();
