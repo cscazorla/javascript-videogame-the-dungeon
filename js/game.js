@@ -41,6 +41,7 @@ window.onload = function () {
 
 
 Game.run = function (context) {
+    this.is_paused = false;
     this.ctx = context;
     this._previousElapsed = 0;
     var p = this.load();
@@ -110,7 +111,32 @@ Game.init = function (level) {
         new torch(14, 9),
     ];
 
-    Keyboard.listenForEvents([Keyboard.LEFT, Keyboard.RIGHT, Keyboard.UP, Keyboard.DOWN]);
+    // Listen for the keyboard events
+    document.addEventListener('keydown', function input(key)
+    {
+        switch(key.keyCode) 
+        {
+            case 37: 
+            this.main_player.move('Left');
+            break;
+            
+            case 38: 
+            this.main_player.move('Up');
+            break;
+            
+            case 39: 
+            this.main_player.move('Right');
+            break;
+            
+            case 40: 
+            this.main_player.move('Down');
+            break;
+
+            case 80:
+            this.is_paused = !this.is_paused;
+            break;
+        }
+    }.bind(Game));
 }
 
 Game.tick = function (elapsed) {
@@ -133,24 +159,15 @@ Game.tick = function (elapsed) {
 Game.update = function (delta) {
     //console.log(Math.round((delta + Number.EPSILON) * 100) / 100);
 
-    // Player movement
-    if (Keyboard.isDown(Keyboard.LEFT)) {
-        Game.main_player.move('Left');
+    // Pause?
+    if(!this.is_paused)
+    {
+        // Enemies
+        for (i = 0; i < this.enemies.length; i++) {
+            this.enemies[i].move();
+        }
     }
-    if (Keyboard.isDown(Keyboard.RIGHT)) {
-        Game.main_player.move('Right');
-    }
-    if (Keyboard.isDown(Keyboard.UP)) {
-        Game.main_player.move('Up');
-    }
-    if (Keyboard.isDown(Keyboard.DOWN)) {
-        Game.main_player.move('Down');
-    }
-
-    // Enemies
-    for (i = 0; i < this.enemies.length; i++) {
-        this.enemies[i].move();
-    }
+    
 };
 
 Game.render = function () 
@@ -264,4 +281,19 @@ Game.render = function ()
     this.ctx.textBaseline = 'top';
     var level = 'Level: ' + (this.current_level + 1);
     this.ctx.fillText(level, this.CANVAS_WIDTH * (8/10), this.CANVAS_MAP_HEIGHT + 10);
+
+    // Pause
+    if(this.is_paused) {
+        this.ctx.globalAlpha = 0.5;
+        this.ctx.fillStyle = '#FFFFFF';
+        this.ctx.fillRect(0, this.CANVAS_HEIGHT/2 - 40, this.CANVAS_WIDTH, 45);
+        this.ctx.globalAlpha = 1.0;
+        
+        this.ctx.fillStyle = '#421e02';
+        this.ctx.font = '18px Rock Salt';
+        this.ctx.textBaseline = 'middle';
+        this.ctx.textAlign = "center";
+        this.ctx.fillText('Game Paused', this.CANVAS_WIDTH / 2, this.CANVAS_MAP_HEIGHT / 2);
+        this.ctx.textAlign = "left";
+    }
 }

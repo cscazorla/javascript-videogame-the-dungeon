@@ -17,7 +17,6 @@ The tilemap has been created from [MedicineStorm's tiles](https://opengameart.or
 * Random maze generator
 * Add teleport
 * Allow player to fire weapons and kill monsters
-* Implement Pause / Resume
 
 # License
 Released under the [MIT License](http://www.opensource.org/licenses/mit-license.php).

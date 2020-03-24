@@ -9,10 +9,13 @@ var torch = function(x,y)
 
     this.animate = function()
     {
-        if(this.current_frame < 3)
-        this.current_frame++;
-        else
-        this.current_frame = 0;
+        if(!Game.is_paused)
+        {
+            if(this.current_frame < 3)
+            this.current_frame++;
+            else
+            this.current_frame = 0;
+        }
     }
 
     this.draw = function()

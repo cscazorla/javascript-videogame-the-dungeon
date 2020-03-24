@@ -3,8 +3,6 @@ var player = function()
     this.max_lifes = 3;
     this.lifes = this.max_lifes;
     this.is_looking_right = false;
-    this.speed_delay = 4;
-    this.counter_speed_delay = 0;
     this.starting_x = 0;
     this.starting_y = 0;
     
@@ -56,11 +54,7 @@ var player = function()
     
     this.move = function(direction)
     {
-        if(this.counter_speed_delay < this.speed_delay)
-        {
-            this.counter_speed_delay++
-        }
-        else 
+        if(!Game.is_paused)
         {
             switch(direction)
             {
@@ -96,8 +90,8 @@ var player = function()
             }
             
             this.touchObject();
-            this.counter_speed_delay = 0;
         }
+        
     }
 
     this.hitByEnemy = function() {
