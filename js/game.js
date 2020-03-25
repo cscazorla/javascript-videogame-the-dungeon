@@ -46,32 +46,7 @@ Game.run = function (context) {
     this._previousElapsed = 0;
     var p = this.load();
 
-    // Listen for the keyboard events
-    document.addEventListener('keydown', function input(key)
-    {
-        switch(key.keyCode) 
-        {
-            case 37: 
-            this.main_player.move('Left');
-            break;
-            
-            case 38: 
-            this.main_player.move('Up');
-            break;
-            
-            case 39: 
-            this.main_player.move('Right');
-            break;
-            
-            case 40: 
-            this.main_player.move('Down');
-            break;
-
-            case 80:
-            this.is_paused = !this.is_paused;
-            break;
-        }
-    }.bind(Game));
+    Input.init();
 
     Promise.all(p).then(function (loaded) {
         this.init(0);
@@ -139,7 +114,6 @@ Game.init = function (level) {
         new torch(14, 9),
     ];
 
-    
 }
 
 Game.tick = function (elapsed) {
@@ -160,11 +134,24 @@ Game.tick = function (elapsed) {
 
 
 Game.update = function (delta) {
-    //console.log(Math.round((delta + Number.EPSILON) * 100) / 100);
+    // console.log(Math.round((delta + Number.EPSILON) * 100) / 100);
 
-    // Pause?
     if(!this.is_paused)
     {
+        // Player movement
+        if( Input.isPressed('up') ) {
+            this.main_player.move('up');
+        }
+        if( Input.isPressed('down') ) {
+            this.main_player.move('down');
+        }
+        if( Input.isPressed('left') ) {
+            this.main_player.move('left');
+        }
+        if( Input.isPressed('right') ) {
+            this.main_player.move('right');
+        }
+
         // Enemies
         for (i = 0; i < this.enemies.length; i++) {
             this.enemies[i].move();

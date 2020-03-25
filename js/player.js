@@ -1,8 +1,12 @@
 var player = function()
 {
     this.max_lifes = 3;
+    this.speed = 15;   // 1 - 100 
+    
+    this.speed = (1 / this.speed) * 100;
     this.lifes = this.max_lifes;
     this.is_looking_right = false;
+    this.speed_counter = 0;
     this.starting_x = 0;
     this.starting_y = 0;
     
@@ -56,40 +60,48 @@ var player = function()
     {
         if(!Game.is_paused)
         {
-            switch(direction)
+            if(this.speed_counter < this.speed)
             {
-                case 'Up':
-                if(this.isWall(this.x, this.y-1) == false)
-                {
-                    this.y--;
-                }
-                break;
-                
-                case 'Down':
-                if(this.isWall(this.x, this.y+1) == false)
-                {
-                    this.y++;
-                }
-                break;
-                
-                case 'Left':
-                if(this.isWall(this.x-1, this.y) == false)
-                {
-                    this.x--;
-                    this.is_looking_right = false;
-                }
-                break;
-                
-                case 'Right':
-                if(this.isWall(this.x+1, this.y) == false)
-                {
-                    this.x++;
-                    this.is_looking_right = true;
-                }
-                break;
+                this.speed_counter++; 
             }
-            
-            this.touchObject();
+            else
+            {
+                this.speed_counter = 0;
+                switch(direction)
+                {
+                    case 'up':
+                    if(this.isWall(this.x, this.y-1) == false)
+                    {
+                        this.y--;
+                    }
+                    break;
+                    
+                    case 'down':
+                    if(this.isWall(this.x, this.y+1) == false)
+                    {
+                        this.y++;
+                    }
+                    break;
+                    
+                    case 'left':
+                    if(this.isWall(this.x-1, this.y) == false)
+                    {
+                        this.x--;
+                        this.is_looking_right = false;
+                    }
+                    break;
+                    
+                    case 'right':
+                    if(this.isWall(this.x+1, this.y) == false)
+                    {
+                        this.x++;
+                        this.is_looking_right = true;
+                    }
+                    break;
+                }
+                
+                this.touchObject();
+            }
         }
         
     }
