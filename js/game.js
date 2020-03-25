@@ -45,6 +45,34 @@ Game.run = function (context) {
     this.ctx = context;
     this._previousElapsed = 0;
     var p = this.load();
+
+    // Listen for the keyboard events
+    document.addEventListener('keydown', function input(key)
+    {
+        switch(key.keyCode) 
+        {
+            case 37: 
+            this.main_player.move('Left');
+            break;
+            
+            case 38: 
+            this.main_player.move('Up');
+            break;
+            
+            case 39: 
+            this.main_player.move('Right');
+            break;
+            
+            case 40: 
+            this.main_player.move('Down');
+            break;
+
+            case 80:
+            this.is_paused = !this.is_paused;
+            break;
+        }
+    }.bind(Game));
+
     Promise.all(p).then(function (loaded) {
         this.init(0);
         window.requestAnimationFrame(this.tick);
@@ -111,32 +139,7 @@ Game.init = function (level) {
         new torch(14, 9),
     ];
 
-    // Listen for the keyboard events
-    document.addEventListener('keydown', function input(key)
-    {
-        switch(key.keyCode) 
-        {
-            case 37: 
-            this.main_player.move('Left');
-            break;
-            
-            case 38: 
-            this.main_player.move('Up');
-            break;
-            
-            case 39: 
-            this.main_player.move('Right');
-            break;
-            
-            case 40: 
-            this.main_player.move('Down');
-            break;
-
-            case 80:
-            this.is_paused = !this.is_paused;
-            break;
-        }
-    }.bind(Game));
+    
 }
 
 Game.tick = function (elapsed) {
