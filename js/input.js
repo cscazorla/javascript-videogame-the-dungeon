@@ -35,8 +35,6 @@ const Input = {
 
         for (let key in this.KEYCODE_MAP) {
                 this.KEY_MAP[key] = this.KEYCODE_MAP[key];
-                console.log(key);
-                console.log(this.KEY_MAP[key]);
                 this.KEY_STATES[this.KEY_MAP[key]]  = 0;
                 count++;
         }

@@ -1,14 +1,3 @@
-const WALL = 1;
-const EXIT_CLOSED = 2;
-const EXIT_OPEN = 3;
-const PATH = 4;
-const KEY = 5;
-const PLAYER = 6;
-const ENEMY1 = 7;
-const ENEMY2 = 8;
-const ENEMY3 = 9;
-const ENEMY4 = 10;
-
 var map = {
     cols: 15,
     rows: 10,

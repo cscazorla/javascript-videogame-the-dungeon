@@ -8,11 +8,6 @@ var enemy = function(x, y, type)
     this.type = type; // [1-3]
     this.counter = 0;
 
-    const UP = 0;
-    const DOWN = 1;
-    const LEFT = 2;
-    const RIGHT = 3;
-
     this.direction = Math.floor(Math.random()*4);
 
     this.isLocatedInPosition = function(x,y)
@@ -39,7 +34,7 @@ var enemy = function(x, y, type)
     {
         var colision = false;
 
-        if(map.getTile(Game.current_level, x, y) == WALL || map.getTile(Game.current_level, x, y) == EXIT_CLOSED || map.getTile(Game.current_level, x, y) == EXIT_OPEN)
+        if(map.getTile(Game.current_level, x, y) == MAP.WALL || map.getTile(Game.current_level, x, y) == MAP.EXIT_CLOSED || map.getTile(Game.current_level, x, y) == MAP.EXIT_OPEN)
         {
             colision = true;
         }
@@ -62,7 +57,7 @@ var enemy = function(x, y, type)
         {
             this.counter = 0;
 
-            if(this.direction == UP)
+            if(this.direction == DIR.UP)
             {
                 if(this.isCollision(this.x, this.y - 1) == false)
                 {
@@ -74,7 +69,7 @@ var enemy = function(x, y, type)
                 }
             }
 
-            if(this.direction == DOWN)
+            if(this.direction == DIR.DOWN)
             {
                 if(this.isCollision(this.x, this.y + 1) == false)
                 {
@@ -86,7 +81,7 @@ var enemy = function(x, y, type)
                 }
             }
 
-            if(this.direction == LEFT)
+            if(this.direction == DIR.LEFT)
             {
                 if(this.isCollision(this.x - 1, this.y) == false)
                 {
@@ -98,7 +93,7 @@ var enemy = function(x, y, type)
                 }
             }
 
-            if(this.direction == RIGHT)
+            if(this.direction == DIR.RIGHT)
             {
                 if(this.isCollision(this.x + 1, this.y) == false)
                 {

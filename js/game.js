@@ -25,16 +25,12 @@ Loader.getImage = function (key) {
 };
 
 var Game = {}
-Game.CANVAS_MAP_WIDTH = 480;
-Game.CANVAS_MAP_HEIGHT = 320;
-Game.CANVAS_TOOLBAR_HEIGHT = 32; 
-Game.CANVAS_WIDTH = 480;
-Game.CANVAS_HEIGHT = Game.CANVAS_MAP_HEIGHT + Game.CANVAS_TOOLBAR_HEIGHT;
+
 
 window.onload = function () {
     canvas = document.getElementById('canvas');
-    canvas.width = Game.CANVAS_WIDTH;
-    canvas.height = Game.CANVAS_HEIGHT;
+    canvas.width = CANVAS_WIDTH;
+    canvas.height = CANVAS_HEIGHT;
     context = canvas.getContext('2d');
     Game.run(context);
 };
@@ -81,24 +77,24 @@ Game.init = function (level) {
             var tile = map.getTile(this.current_level, c, r);
 
             switch (tile) {
-                case PLAYER:
+                case MAP.PLAYER:
                     this.main_player.x = c;
                     this.main_player.y = r;
                     this.main_player.starting_x = c;
                     this.main_player.starting_y = r;
                     
-                    map.setTile(this.current_level, c, r, PATH);
+                    map.setTile(this.current_level, c, r, MAP.PATH);
                 break;
 
-                case ENEMY1:
-                case ENEMY2:
-                case ENEMY3:
-                case ENEMY4:
+                case MAP.ENEMY1:
+                case MAP.ENEMY2:
+                case MAP.ENEMY3:
+                case MAP.ENEMY4:
                     this.enemies.push(new enemy(c, r, tile - 6));
-                    map.setTile(this.current_level, c, r, PATH);
+                    map.setTile(this.current_level, c, r, MAP.PATH);
                 break;
 
-                case EXIT_CLOSED:
+                case MAP.EXIT_CLOSED:
                     this.exit_coordinate_x = c;
                     this.exit_coordinate_y = r;
                     break;
@@ -120,7 +116,7 @@ Game.tick = function (elapsed) {
     window.requestAnimationFrame(this.tick);
 
     // Clear previous frame
-    this.ctx.clearRect(0, 0, this.CANVAS_WIDTH, this.CANVAS_HEIGHT);
+    this.ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
     // compute delta time in seconds -- also cap it
     var delta = (elapsed - this._previousElapsed) / 1000.0;
@@ -223,7 +219,7 @@ Game.render = function ()
             map.tsize,
             map.tsize,
             map.csize * i,
-            this.CANVAS_MAP_HEIGHT,
+            CANVAS_MAP_HEIGHT,
             map.csize,
             map.csize
         );
@@ -233,7 +229,7 @@ Game.render = function ()
     this.ctx.fillStyle = '#421e02';
     this.ctx.font = '18px Rock Salt';
     this.ctx.textBaseline = 'top';
-    this.ctx.fillText('Lifes', 5, this.CANVAS_MAP_HEIGHT + 10);
+    this.ctx.fillText('Lifes', 5, CANVAS_MAP_HEIGHT + 10);
     for(i = 0; i < this.main_player.lifes; i++)
     {
         Game.ctx.drawImage(
@@ -243,7 +239,7 @@ Game.render = function ()
             map.tsize,
             map.tsize,
             65 + i * map.tsize,
-            this.CANVAS_MAP_HEIGHT,
+            CANVAS_MAP_HEIGHT,
             map.tsize,
             map.tsize
         );
@@ -258,8 +254,8 @@ Game.render = function ()
             0,
             map.tsize,
             map.tsize,
-            this.CANVAS_WIDTH/2,
-            this.CANVAS_MAP_HEIGHT + 2,
+            CANVAS_WIDTH/2,
+            CANVAS_MAP_HEIGHT + 2,
             map.tsize,
             map.tsize
         );
@@ -270,20 +266,20 @@ Game.render = function ()
     this.ctx.font = '18px Rock Salt';
     this.ctx.textBaseline = 'top';
     var level = 'Level: ' + (this.current_level + 1);
-    this.ctx.fillText(level, this.CANVAS_WIDTH * (8/10), this.CANVAS_MAP_HEIGHT + 10);
+    this.ctx.fillText(level, CANVAS_WIDTH * (8/10), CANVAS_MAP_HEIGHT + 10);
 
     // Pause
     if(this.is_paused) {
         this.ctx.globalAlpha = 0.5;
         this.ctx.fillStyle = '#FFFFFF';
-        this.ctx.fillRect(0, this.CANVAS_HEIGHT/2 - 40, this.CANVAS_WIDTH, 45);
+        this.ctx.fillRect(0, CANVAS_HEIGHT/2 - 40, CANVAS_WIDTH, 45);
         this.ctx.globalAlpha = 1.0;
         
         this.ctx.fillStyle = '#421e02';
         this.ctx.font = '18px Rock Salt';
         this.ctx.textBaseline = 'middle';
         this.ctx.textAlign = "center";
-        this.ctx.fillText('Game Paused', this.CANVAS_WIDTH / 2, this.CANVAS_MAP_HEIGHT / 2);
+        this.ctx.fillText('Game Paused', CANVAS_WIDTH / 2, CANVAS_MAP_HEIGHT / 2);
         this.ctx.textAlign = "left";
     }
 }

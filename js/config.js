@@ -1,0 +1,25 @@
+CANVAS_MAP_WIDTH = 480;
+CANVAS_MAP_HEIGHT = 320;
+CANVAS_TOOLBAR_HEIGHT = 32; 
+CANVAS_WIDTH = CANVAS_MAP_WIDTH;
+CANVAS_HEIGHT = CANVAS_MAP_HEIGHT + CANVAS_TOOLBAR_HEIGHT;
+
+const MAP = {
+    WALL: 1,
+    EXIT_CLOSED: 2,
+    EXIT_OPEN: 3,
+    PATH: 4,
+    KEY: 5,
+    PLAYER: 6,
+    ENEMY1: 7,
+    ENEMY2: 8,
+    ENEMY3: 9,
+    ENEMY4: 10,
+}
+
+const DIR = {
+    UP:         0,
+    DOWN:       1,
+    LEFT:       2,
+    RIGHT:      3,
+};

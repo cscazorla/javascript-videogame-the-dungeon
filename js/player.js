@@ -48,7 +48,7 @@ var player = function()
     {
         var is_wall = false;
         
-        if(map.getTile(Game.current_level, x, y) == WALL || map.getTile(Game.current_level, x, y) == EXIT_CLOSED)
+        if(map.getTile(Game.current_level, x, y) == MAP.WALL || map.getTile(Game.current_level, x, y) == MAP.EXIT_CLOSED)
         {
             is_wall = true;
         }
@@ -139,23 +139,23 @@ var player = function()
     {
         var object = map.getTile(Game.current_level, this.x, this.y);
         
-        if(object == KEY)
+        if(object == MAP.KEY)
         {
             this.has_key = true;
-            map.setTile(Game.current_level, this.x, this.y, PATH);
+            map.setTile(Game.current_level, this.x, this.y, MAP.PATH);
             for(var c = 0; c < map.cols; c++)
             {
                 for(var r = 0; r < map.rows; r++)
                 {
-                    if (map.getTile(Game.current_level, c, r) == EXIT_CLOSED)
+                    if (map.getTile(Game.current_level, c, r) == MAP.EXIT_CLOSED)
                     {
-                        map.setTile(Game.current_level, c, r, EXIT_OPEN);
+                        map.setTile(Game.current_level, c, r, MAP.EXIT_OPEN);
                     }
                 }
             }
         }
         
-        if(object == EXIT_OPEN)
+        if(object == MAP.EXIT_OPEN)
         {
             if(this.has_key == true)
             this.win();
