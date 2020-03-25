@@ -14,8 +14,13 @@ The tilemap has been created from [MedicineStorm's tiles](https://opengameart.or
     * https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API/Using_the_Gamepad_API
     * https://beej.us/blog/data/javascript-gamepad/
     * https://html5gamepad.com/
-* Random maze generator
+* Torches should be defined in the map and not in the code
+    * Add light effect to the torches
+    * Add a new row to the tilemap with more animations
+* Upgrade tiles to 64x64
+* Increase the map size
 * Add teleport
+* Random maze generator
 * Allow player to fire weapons and kill monsters
 
 # License
